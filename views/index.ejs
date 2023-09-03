@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Postingan Diskusi</title>
+</head>
+<body>
+    <h1>Postingan Diskusi</h1>
+    <ul>
+        <% posts.forEach(post => { %>
+          <li>
+            <h3><%= post.title %></h3>
+            <p><%= post.content %></p>
+            <p>Likes: <%= post.likes %></p>
+            <form method="POST" action="/posts/<%= post._id %>/like">
+              <button type="submit">Like</button>
+            </form>
+            <form method="POST" action="/posts/<%= post._id %>/comment">
+              <input type="text" name="text" placeholder="Tambahkan komentar" />
+              <button type="submit">Tambahkan Komentar</button>
+            </form>
+            <ul>
+              <% post.comments.forEach(comment => { %>
+                <li><%= comment.text %></li>
+              <% }); %>
+            </ul>
+          </li>
+        <% }); %>
+      </ul>
+      
+</body>
+</html>
+

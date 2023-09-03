@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= discussion.title %></title>
+</head>
+<body>
+    <!-- discussion.ejs -->
+
+<h2><%= discussion.title %></h2>
+<p><%= discussion.content %></p>
+
+<!-- Menampilkan jumlah like -->
+<p>Jumlah Like: <%= discussion.likes.length %></p>
+
+<!-- Form untuk menambahkan like -->
+<form action="/discussion/<%= discussion._id %>/like" method="POST">
+  <button type="submit">Like</button>
+</form>
+
+<hr>
+
+<!-- Menampilkan komentar yang sudah ada -->
+<h3>Komentar:</h3>
+<ul>
+  <% discussion.comments.forEach(function(comment) { %>
+    <li><%= comment.text %></li>
+  <% }); %>
+</ul>
+
+<!-- Form untuk menambahkan komentar -->
+<form action="/discussion/<%= discussion._id %>/comment" method="POST">
+  <input type="text" name="text" placeholder="Tambahkan komentar">
+  <button type="submit">Kirim Komentar</button>
+</form>
+
+
+    <a href="/">Kembali ke Daftar Diskusi</a>
+</body>
+</html>
