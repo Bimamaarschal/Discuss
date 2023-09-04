@@ -13,14 +13,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(methodOverride('_method'));
-// Set mesin templat EJS
+
+// EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Gunakan rute /add dari folder js
+// Add - Function
 app.use('/', addRoute);
 
-// Gunakan rute /posts dari folder js
+// Post - Function
 app.use('/', postsRoute);
 
 
