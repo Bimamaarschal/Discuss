@@ -34,7 +34,7 @@ router.post('/posts/:postId/like', async (req, res) => {
       const post = await DiscussionPost.findById(postId);
       post.likes++;
       await post.save();
-      res.redirect('/posts'); // Redirect ke halaman daftar postingan setelah menyukai postingan
+      res.redirect("/posts/" + postId); // Redirect ke halaman daftar postingan setelah menyukai postingan
     } catch (err) {
       res.status(500).json({ error: 'Gagal menyukai postingan' });
     }
@@ -48,10 +48,33 @@ router.post('/posts/:postId/comment', async (req, res) => {
       const post = await DiscussionPost.findById(postId);
       post.comments.push({ text });
       await post.save();
-      res.redirect('/posts'); // Redirect ke halaman daftar postingan setelah menambahkan komentar
+      res.redirect("/posts/" + postId);// Redirect ke halaman daftar postingan setelah menambahkan komentar
     } catch (err) {
       res.status(500).json({ error: 'Gagal menambahkan komentar ke postingan' });
     }
   });
+
+// Menampilkan halaman detail postingan
+
+router.get('/posts/:postId', async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await DiscussionPost.findById(postId);
+    res.render('posts-detail', { post });
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal mengambil data postingan' });
+  }
+});
+
+// Menghapus postingan berdasarkan ID
+router.delete('/posts/:postId', async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    await DiscussionPost.findByIdAndRemove(postId); // Menghapus postingan dari database berdasarkan ID
+    res.redirect('/posts'); // Redirect ke halaman daftar postingan setelah berhasil menghapus
+  } catch (err) {
+    res.status(500).json({ error: 'Gagal menghapus postingan' });
+  }
+});
   
 module.exports = router;
