@@ -32,7 +32,7 @@ const DiscussionPost = mongoose.model('DiscussionPost', {
   }],
 });
 
-app.get('/', async (req, res) => {
+app.get('/posts', async (req, res) => {
   try {
     const posts = await DiscussionPost.find();
     res.render('index', { posts });
